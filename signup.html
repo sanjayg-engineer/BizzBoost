@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BizzBoost - Sign Up</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+    }
+
+    .signup-container {
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      width: 400px;
+      text-align: center;
+      color: white;
+    }
+
+    .logo {
+      font-size: 40px;
+      margin-bottom: 5px;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    p {
+      margin-bottom: 25px;
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .tabs button {
+      flex: 1;
+      padding: 10px 0;
+      border: none;
+      background: transparent;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 12px 12px 0 0;
+      transition: background 0.3s;
+    }
+    .tabs button.active {
+      background: white;
+      color: #2563eb;
+    }
+
+    .input-group {
+      position: relative;
+      margin-bottom: 15px;
+      text-align: left;
+    }
+    .input-group input,
+    .input-group select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      background: rgba(255,255,255,0.2);
+      color: white;
+    }
+    .input-group input::placeholder {
+      color: rgba(255,255,255,0.7);
+    }
+    label {
+      font-size: 13px;
+      margin-bottom: 5px;
+      display: block;
+      opacity: 0.9;
+    }
+
+    .gender-group {
+      display: flex;
+      justify-content: space-around;
+      margin: 10px 0 20px;
+      font-size: 14px;
+    }
+    .gender-group label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      background: white;
+      color: #2563eb;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .btn:hover {
+      background: #e0e0e0;
+    }
+
+    .login-text {
+      margin-top: 15px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.85);
+    }
+    .login-text a {
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+    }
+    .login-text a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="signup-container">
+    <div class="logo"><img src="logo.png" alt="" style="width: 100px; height:100px"></div>
+    <h1>BizzBoost</h1>
+    <p>AI-Assisted Business Strategy</p>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button onclick="window.location.href='login.html'">Login</button>
+      <button class="active">Sign Up</button>
+    </div>
+
+    <form id="signupForm">
+      <div class="input-group">
+        <input type="text" id="firstName" placeholder="First Name" required>
+      </div>
+      <div class="input-group">
+        <input type="text" id="lastName" placeholder="Last Name" required>
+      </div>
+      <div class="input-group">
+        <input type="email" id="email" placeholder="Email address" required>
+      </div>
+      <div class="input-group">
+        <input type="password" id="password" placeholder="Password" required>
+      </div>
+      <div class="input-group">
+        <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+      </div>
+      <div class="input-group">
+        <label for="dob">Date of Birth</label>
+        <input type="date" id="dob" required>
+      </div>
+      <div class="gender-group">
+        <label><input type="radio" name="gender" value="Male" required> Male</label>
+        <label><input type="radio" name="gender" value="Female"> Female</label>
+        <label><input type="radio" name="gender" value="Other"> Other</label>
+      </div>
+      <button type="submit" class="btn">Sign Up</button>
+    </form>
+
+    <p class="login-text">Already have an account? <a href="login.html">Login here</a></p>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import { 
+      getAuth, 
+      createUserWithEmailAndPassword, 
+      sendEmailVerification, 
+      signOut 
+    } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAtTcIPAK5a8-PKaCxMBT4Ylv3LcnieHIg",
+      authDomain: "bizzboost-a0e09.firebaseapp.com",
+      projectId: "bizzboost-a0e09",
+      storageBucket: "bizzboost-a0e09.appspot.com",
+      messagingSenderId: "636727800750",
+      appId: "1:636727800750:web:a32cb2eb385112069c4e3f",
+      measurementId: "G-W122HECTPV"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    document.getElementById("signupForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const firstName = document.getElementById("firstName").value;
+      const lastName = document.getElementById("lastName").value;
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+      const dob = document.getElementById("dob").value;
+      const gender = document.querySelector("input[name='gender']:checked")?.value;
+
+      if (password !== confirmPassword) {
+        alert("Passwords do not match!");
+        return;
+      }
+
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        await sendEmailVerification(user);
+        alert("Verification email sent! Please check your inbox.");
+        await signOut(auth);
+
+        await fetch("http://127.0.0.1:5000/save-user", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            uid: user.uid,
+            firstName,
+            lastName,
+            email,
+            dob,
+            gender,
+            verified: false
+          })
+        });
+
+      } catch (error) {
+        alert("Error: " + error.message);
+      }
+    });
+  </script>
+</body>
+</html>
